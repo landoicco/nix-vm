@@ -1,0 +1,5 @@
+# Each VM resolves the latest stable packages; see docs/decisions.md
+flake.lock
+result
+result-*
+pr-body.md
