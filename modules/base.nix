@@ -5,6 +5,7 @@
   # VirtualBox BIOS default; install.sh partitions this disk
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.configurationLimit = 5;
 
   networking.hostName = "nix-vm";
   networking.networkmanager.enable = true;
@@ -38,6 +39,7 @@
   programs.zsh.enable = true;
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.autoPrune.enable = true;
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
@@ -53,6 +55,14 @@
     "nix-command"
     "flakes"
   ];
+
+  # Keeps the VM disk from filling up with old generations
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 
   system.stateVersion = "26.05";
 }

@@ -45,6 +45,14 @@ in
     ];
   };
 
+  programs.git = {
+    enable = true;
+    settings.user = {
+      name = "Lando Icaza";
+      email = "landoicco@gmail.com";
+    };
+  };
+
   # Linked to the clone, so edits apply right away and can be committed
   home.file.".p10k.zsh".source = link "config/p10k.zsh";
   xdg.configFile."doom".source = link "config/doom";
