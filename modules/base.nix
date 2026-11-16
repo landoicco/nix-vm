@@ -46,6 +46,13 @@
     git
     vscode
     brave
+    # CLI basics missing from a default NixOS
+    zip
+    unzip
+    htop
+    tree
+    jq
+    file
   ];
 
   # Powerlevel10k's recommended font
