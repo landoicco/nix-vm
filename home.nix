@@ -16,6 +16,21 @@ in
     enable = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    # Up/down cycle through history entries matching what is typed
+    historySubstringSearch = {
+      enable = true;
+      # Terminals send either sequence for the arrow keys
+      searchUpKey = [
+        "^[[A"
+        "^[OA"
+      ];
+      searchDownKey = [
+        "^[[B"
+        "^[OB"
+      ];
+    };
+    # A project's dev shell with zsh instead of bash
+    shellAliases.nd = "nix develop -c zsh";
     initContent = lib.mkMerge [
       # Powerlevel10k instant prompt; must stay at the top of .zshrc
       (lib.mkBefore ''

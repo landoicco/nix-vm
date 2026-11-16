@@ -26,7 +26,9 @@ Full steps in [docs/new-vm.md](docs/new-vm.md).
 sudo nixos-rebuild switch --flake path:$HOME/nix-vm#kde --impure
 ```
 
-Doom and p10k configs live in `config/`: edit, commit, push.
+- 🔎 Type the start of a command and press ↑/↓ to cycle through matching history.
+- ❄️ `nd`: enter a project's `nix develop` with zsh; a snowflake badge shows in the prompt.
+- ✍️ Doom and p10k configs live in `config/`: edit, commit, push.
 
 ## 📚 Docs
 
