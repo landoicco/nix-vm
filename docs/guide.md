@@ -16,21 +16,23 @@ Boot the ISO; it logs you in as `nixos` with network already up. Then:
 
 ```bash
 curl -LO https://raw.githubusercontent.com/landoicco/nix-vm/main/install.sh
-less install.sh            # read it first: it erases /dev/sda
-sudo bash install.sh kde   # or xfce, gnome
+less install.sh         # read it first: it erases /dev/sda
+sudo bash install.sh    # or skip the desktop menu: sudo bash install.sh kde
 ```
 
 The script:
 
-1. Checks the desktop name, BIOS boot and that `/dev/sda` is not in use.
-2. Asks you to type `YES` before erasing `/dev/sda`.
-3. Creates this VM's flake from the template, with its hardware config,
-   and commits it to a local git repo.
-4. Partitions the disk with disko: GRUB boot, root and 4 GiB of swap.
-5. Installs NixOS from that flake, which ends up in `/etc/nixos`.
-6. Clones Doom Emacs to `~/.config/emacs` and copies the Doom and p10k
+1. Checks BIOS boot and that `/dev/sda` is not in use.
+2. Asks for the desktop (xfce, kde, gnome or i3) and the hostname
+   (`nix-vm` by default).
+3. Asks you to type `YES` before erasing `/dev/sda`.
+4. Creates this VM's flake from the template, with its desktop, hostname
+   and hardware config, and commits it to a local git repo.
+5. Partitions the disk with disko: GRUB boot, root and 4 GiB of swap.
+6. Installs NixOS from that flake, which ends up in `/etc/nixos`.
+7. Clones Doom Emacs to `~/.config/emacs` and copies the Doom and p10k
    configs to `~/.config/doom` and `~/.p10k.zsh`.
-7. Asks for your user password (root has none; use `sudo`).
+8. Asks for your user password (root has none; use `sudo`).
 
 Then power off, remove the ISO from the VM and boot it.
 
@@ -41,7 +43,7 @@ flake from that branch:
 
 ```bash
 curl -LO https://raw.githubusercontent.com/landoicco/nix-vm/<branch>/install.sh
-sudo NIX_VM_REPO='github:landoicco/nix-vm?ref=<branch>' bash install.sh kde
+sudo NIX_VM_REPO='github:landoicco/nix-vm?ref=<branch>' bash install.sh
 ```
 
 The VM's flake keeps following that branch. Once it is merged, point it
@@ -53,13 +55,35 @@ back to `main` (see "Follow the repo" below).
 doom install   # accept the defaults; your config in ~/.config/doom is kept
 ```
 
+### 🪟 i3
+
+On the first login, i3 asks for its modifier key: press Enter to create
+`~/.config/i3/config`, then pick **Win**. The keys you need:
+
+| Key               | Action                                    |
+|-------------------|-------------------------------------------|
+| `Mod+Enter`       | Open a terminal (Alacritty)               |
+| `Mod+d`           | Launch an app (dmenu)                     |
+| `Mod+Shift+q`     | Close the window                          |
+| `Mod+1…9`         | Go to workspace 1–9                       |
+| `Mod+Shift+1…9`   | Move the window to workspace 1–9          |
+| `Mod+arrows`      | Move between windows                      |
+| `Mod+h` / `Mod+v` | Open the next window beside / below       |
+| `Mod+e`           | Switch the split between beside and below |
+| `Mod+w`           | Tabs: one window at a time                |
+| `Mod+f`           | Fullscreen on and off                     |
+| `Mod+Shift+e`     | Log out                                   |
+
+New windows share the screen: three terminals on one workspace show side
+by side.
+
 ## 4. 🔁 Day to day
 
 `/etc/nixos` holds this VM's configuration:
 
 ```
 /etc/nixos/
-  flake.nix                    # nix-vm's development profile + the desktop
+  flake.nix                    # development profile, desktop and hostname
   flake.lock                   # pinned nix-vm and nixpkgs versions
   hardware-configuration.nix   # generated at install
   configuration.nix            # this VM's own changes
