@@ -10,27 +10,47 @@
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
-      mkVm =
+      desktops = [
+        "xfce"
+        "kde"
+        "gnome"
+      ];
+    in
+    {
+      # A VM's flake picks one profile and one desktop
+      nixosModules = {
+        core = {
+          imports = [
+            home-manager.nixosModules.home-manager
+            ./modules/core.nix
+          ];
+        };
+        development = {
+          imports = [
+            self.nixosModules.core
+            ./profiles/development.nix
+          ];
+        };
+      }
+      // nixpkgs.lib.genAttrs desktops (desktop: ./modules/desktops/${desktop}.nix);
+
+      nixosConfigurations = nixpkgs.lib.genAttrs desktops (
         desktop:
         nixpkgs.lib.nixosSystem {
           modules = [
             # Each VM keeps its own hardware config; reading it needs --impure
             /etc/nixos/hardware-configuration.nix
-            ./modules/base.nix
-            ./modules/emacs.nix
-            ./modules/desktops/${desktop}.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.licaza = import ./home.nix;
-            }
+            self.nixosModules.development
+            self.nixosModules.${desktop}
           ];
-        };
-    in
-    {
-      nixosConfigurations = nixpkgs.lib.genAttrs [ "xfce" "kde" "gnome" ] mkVm;
+        }
+      );
     };
 }
