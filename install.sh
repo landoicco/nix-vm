@@ -18,6 +18,15 @@ die() {
   exit 1
 }
 
+# Progress in NixOS light blue (bright cyan on the ISO console)
+step() {
+  if [[ -t 1 ]]; then
+    printf '\e[1;96m==> %s\e[0m\n' "$*"
+  else
+    printf '==> %s\n' "$*"
+  fi
+}
+
 [[ $EUID -eq 0 ]] || die "run as root (sudo)"
 [[ ! -d /sys/firmware/efi ]] || die "UEFI detected; disable EFI in the VM settings"
 [[ -b $disk ]] || die "$disk not found"
@@ -49,7 +58,7 @@ export NIX_CONFIG="experimental-features = nix-command flakes"
 PATH="$(nix-build '<nixpkgs>' -A git --no-out-link)/bin:$PATH"
 git_commit() { git -c user.name=nix-vm -c user.email=nix-vm@localhost commit -qm "$1"; }
 
-echo "==> Creating this VM's flake ($desktop)"
+step "Creating this VM's flake ($desktop)"
 config=$(mktemp -d)
 nix flake new -t "$repo" "$config/nixos"
 config=$config/nixos
@@ -68,16 +77,16 @@ nix flake lock "$config"
 git -C "$config" add flake.lock
 (cd "$config" && git_commit "Initial configuration from nix-vm")
 
-echo "==> Partitioning $disk"
+step "Partitioning $disk"
 nix run --inputs-from "$config" nix-vm#disko -- \
   --mode destroy,format,mount --yes-wipe-all-disks --flake "$config#$hostname"
 
-echo "==> Installing NixOS"
+step "Installing NixOS"
 mkdir -p /mnt/etc
 cp -a "$config" /mnt/etc/nixos
 nixos-install --no-root-passwd --flake "/mnt/etc/nixos#$hostname"
 
-echo "==> Setting up $user's home"
+step "Setting up $user's home"
 home=/mnt/home/$user
 src=$(nix eval --raw --impure --expr "(builtins.getFlake \"git+file:///mnt/etc/nixos\").inputs.nix-vm.outPath")
 mkdir -p "$home/.config"
@@ -87,4 +96,4 @@ cp -r --no-preserve=mode "$src/config/doom" "$home/.config/doom"
 cp --no-preserve=mode "$src/config/p10k.zsh" "$home/.p10k.zsh"
 nixos-enter --root /mnt -c "chown -R $user:users /home/$user && passwd $user"
 
-echo "Done. Remove the ISO, reboot, log in and run: doom install"
+step "Done. Remove the ISO, reboot, log in and run: doom install"
