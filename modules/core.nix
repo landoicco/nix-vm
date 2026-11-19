@@ -1,10 +1,19 @@
-# Shared by every VM, whatever the desktop.
-{ pkgs, ... }:
+# Shared by every VM, whatever the profile or desktop.
+{ ... }:
 
 {
-  # VirtualBox BIOS default; install.sh partitions this disk
+  imports = [
+    ./disk.nix
+    ./features/cli.nix
+    ./features/docker.nix
+    ./features/emacs.nix
+    ./features/git.nix
+    ./features/gui-apps.nix
+    ./features/zsh.nix
+  ];
+
+  # VirtualBox BIOS default; disk.nix sets the disk GRUB installs to
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.configurationLimit = 5;
 
   networking.hostName = "nix-vm";
@@ -30,33 +39,14 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
     ];
-    shell = pkgs.zsh;
   };
 
-  # Makes zsh a valid login shell; its config lives in home.nix
-  programs.zsh.enable = true;
-
-  virtualisation.docker.enable = true;
-  virtualisation.docker.autoPrune.enable = true;
+  # Features add their user settings under home-manager.users.licaza
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    git
-    vscode
-    brave
-    # CLI basics missing from a default NixOS
-    zip
-    unzip
-    htop
-    tree
-    jq
-    file
-  ];
-
-  # Powerlevel10k's recommended font
-  fonts.packages = [ pkgs.meslo-lgs-nf ];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -70,6 +60,4 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
-
-  system.stateVersion = "26.05";
 }
