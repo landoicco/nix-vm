@@ -107,7 +107,8 @@ Work in your own clone, never from a VM:
   `nix-vm.<name>.enable` option, turned on in `profiles/development.nix`.
 - 📝 Doom or p10k changes worth keeping: copy them from a VM to `config/` by hand.
 - 🔄 Update pinned packages: `nix flake update`.
-- ✅ Before committing: `nix flake check --no-build "path:$PWD"`.
+- ✅ Before committing: `nix flake check --no-build "path:$PWD"`. CI runs
+  the same check on every pull request and push to `main`.
 
 VMs only see the change once they follow the repo.
 
