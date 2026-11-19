@@ -15,6 +15,7 @@
 
 - 🔒 `flake.lock` is in git: every VM starts from the same pinned versions.
 - 🔄 Updates are deliberate: `nix flake update` in the repo, test, commit; each VM follows with `nix flake update nix-vm`.
+- ✅ CI (GitHub Actions, `cachix/install-nix-action`) runs `nix flake check --no-build` on every pull request and push to `main`; it evaluates, it does not build.
 - 🧪 install.sh locks the VM's flake before installing, so Nix never sees it change mid-install.
 - 🔧 Hardware comes from `nixos-generate-config --no-filesystems`, kept in the VM's `/etc/nixos`; no `--impure`.
 - 💽 disko partitions the disk from `modules/disk.nix`.
@@ -35,7 +36,7 @@
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.
 - 🧩 VS Code is installed only; extensions and settings are unmanaged.
-- 🧹 Weekly Nix GC (older than 7 days), store optimisation and Docker auto-prune.
+- 🧹 Weekly Nix GC (older than 7 days), store optimisation and Docker auto-prune, unused images included (`--all`).
 
 ## 🔐 Privacy
 
