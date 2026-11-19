@@ -1,0 +1,13 @@
+# This VM's own settings, on top of nix-vm's development profile.
+# Apply changes with: sudo nixos-rebuild switch
+{ pkgs, ... }:
+
+{
+  # Examples:
+  # environment.systemPackages = [ pkgs.btop ];
+  # nix-vm.docker.enable = false;
+
+  # The release this VM was installed with; never change it
+  system.stateVersion = "26.05";
+  home-manager.users.licaza.home.stateVersion = "26.05";
+}

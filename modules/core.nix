@@ -3,6 +3,7 @@
 
 {
   imports = [
+    ./disk.nix
     ./features/cli.nix
     ./features/docker.nix
     ./features/emacs.nix
@@ -11,9 +12,8 @@
     ./features/zsh.nix
   ];
 
-  # VirtualBox BIOS default; install.sh partitions this disk
+  # VirtualBox BIOS default; disk.nix sets the disk GRUB installs to
   boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.configurationLimit = 5;
 
   networking.hostName = "nix-vm";
@@ -45,7 +45,6 @@
   # Features add their user settings under home-manager.users.licaza
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
-  home-manager.users.licaza.home.stateVersion = "26.05";
 
   nixpkgs.config.allowUnfree = true;
 
@@ -61,6 +60,4 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
-
-  system.stateVersion = "26.05";
 }

@@ -7,6 +7,10 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -14,6 +18,7 @@
       self,
       nixpkgs,
       home-manager,
+      disko,
       ...
     }:
     let
@@ -29,6 +34,7 @@
         core = {
           imports = [
             home-manager.nixosModules.home-manager
+            disko.nixosModules.disko
             ./modules/core.nix
           ];
         };
@@ -41,14 +47,24 @@
       }
       // nixpkgs.lib.genAttrs desktops (desktop: ./modules/desktops/${desktop}.nix);
 
+      # install.sh copies this to /etc/nixos on each new VM
+      templates.default = {
+        path = ./template;
+        description = "A VM's own flake, built on nix-vm";
+      };
+
+      # install.sh runs the disko pinned in flake.lock
+      packages.x86_64-linux.disko = disko.packages.x86_64-linux.disko;
+
+      # Not installed anywhere: `nix flake check` evaluates each desktop
       nixosConfigurations = nixpkgs.lib.genAttrs desktops (
         desktop:
         nixpkgs.lib.nixosSystem {
           modules = [
-            # Each VM keeps its own hardware config; reading it needs --impure
-            /etc/nixos/hardware-configuration.nix
             self.nixosModules.development
             self.nixosModules.${desktop}
+            ./template/configuration.nix
+            { nixpkgs.hostPlatform = "x86_64-linux"; }
           ];
         }
       );
