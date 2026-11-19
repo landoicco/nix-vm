@@ -1,5 +1,5 @@
 # Shared by every VM, whatever the profile or desktop.
-{ ... }:
+{ lib, ... }:
 
 {
   imports = [
@@ -16,7 +16,8 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.configurationLimit = 5;
 
-  networking.hostName = "nix-vm";
+  # Each VM's flake sets its own
+  networking.hostName = lib.mkDefault "nix-vm";
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Mexico_City";
