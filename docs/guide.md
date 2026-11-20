@@ -57,8 +57,8 @@ doom install   # accept the defaults; your config in ~/.config/doom is kept
 
 ### 🪟 i3
 
-On the first login, i3 asks for its modifier key: press Enter to create
-`~/.config/i3/config`, then pick **Win**. The keys you need:
+The i3 config comes from home-manager, with **Win** as the modifier
+(`Mod`). The keys you need:
 
 | Key               | Action                                    |
 |-------------------|-------------------------------------------|
@@ -80,6 +80,19 @@ by side.
 To set a wallpaper, run `nitrogen` (`Mod+d`, then type it), add a folder
 of images and pick one with **Zoomed Fill**. It comes back on each login
 and redraws when the VM window is resized.
+
+To browse files, run `pcmanfm` the same way. Without a trash, deleting
+removes files for good.
+
+polybar shows the workspaces, the window title, CPU, memory, disk, IP and
+the clock. Its colors are Gruvbox; change any of them in the VM's
+`configuration.nix`:
+
+```nix
+nix-vm.polybar.colors.accent = "#83a598";
+```
+
+The others are `bg`, `surface`, `fg`, `muted` and `dim`.
 
 ## 4. 🔁 Day to day
 
@@ -117,12 +130,22 @@ sudo nixos-rebuild switch
 sudo git -C /etc/nixos commit -am "Update nix-vm"
 ```
 
-To follow another branch, edit `inputs.nix-vm.url` in `/etc/nixos/flake.nix`
-and run the same commands.
+To follow another branch, set `inputs.nix-vm.url` in `/etc/nixos/flake.nix`
+and run the same commands:
+
+```nix
+inputs.nix-vm.url = "github:landoicco/nix-vm?ref=<branch>";
+```
+
+Once it is merged, go back to `github:landoicco/nix-vm`. The VM only sees
+commits already pushed to GitHub.
+
+On i3, log out and back in (`Mod+Shift+e`) after a rebuild that changes the
+i3 or polybar config.
 
 ### 💡 Tips
 
-- ❄️ `nd`: open a project's `nix develop` with zsh; a snowflake badge shows in the prompt.
+- 🧊 `nd`: open a project's `nix develop` with zsh; an ice cube shows in the prompt.
 - 🔎 Type the start of a command and press ↑/↓ to cycle through matching history.
 - ✍️ Edit Doom in `~/.config/doom`; run `doom sync` after changing `init.el`
   or `packages.el`.
