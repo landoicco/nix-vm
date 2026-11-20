@@ -77,6 +77,10 @@ On the first login, i3 asks for its modifier key: press Enter to create
 New windows share the screen: three terminals on one workspace show side
 by side.
 
+To set a wallpaper, run `nitrogen` (`Mod+d`, then type it), add a folder
+of images and pick one with **Zoomed Fill**. It comes back on each login
+and redraws when the VM window is resized.
+
 ## 4. 🔁 Day to day
 
 `/etc/nixos` holds this VM's configuration:
