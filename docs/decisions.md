@@ -9,7 +9,8 @@
 - 🧩 One file per feature in `modules/features`, holding both its NixOS and home-manager parts, toggled by `nix-vm.<feature>.enable`.
 - 🎛️ Profiles turn features on with `mkDefault`, so a VM can turn any off; for now there is one, `development`.
 - 🖥️ One module per desktop: `xfce`, `kde`, `gnome`, `i3`.
-- 🪟 i3 is the light desktop: X11 runs well in VirtualBox, while Wayland compositors like Hyprland need real 3D acceleration. It uses its default config, dmenu, Alacritty and nitrogen for the wallpaper; i3 itself splits the screen, so no tmux.
+- 🪟 i3 is the light desktop: X11 runs well in VirtualBox, while Wayland compositors like Hyprland need real 3D acceleration. home-manager writes its config (default keys on Win), with dmenu, Alacritty and nitrogen for the wallpaper; i3 itself splits the screen, so no tmux.
+- 📊 polybar replaces i3bar: one process with built-in modules only, no scripts. Workspaces come from EWMH (`internal/xworkspaces`), so nixpkgs' cached polybar works without i3 support. No compositor, so no rounded or floating bar. One layout; colors are a `nix-vm.polybar.colors` option.
 - 🪶 No flake-parts: a plain flake is enough for one system and a few outputs.
 
 ## 📌 Reproducibility
@@ -33,7 +34,7 @@
 
 ## 🧰 Tools
 
-- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders and the cursor.
+- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders, the cursor, and i3 and polybar.
 - 📧 The git identity is set system-wide (`/etc/gitconfig`), so `sudo git` commits in `/etc/nixos` carry it too.
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.

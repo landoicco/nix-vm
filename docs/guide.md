@@ -57,8 +57,8 @@ doom install   # accept the defaults; your config in ~/.config/doom is kept
 
 ### 🪟 i3
 
-On the first login, i3 asks for its modifier key: press Enter to create
-`~/.config/i3/config`, then pick **Win**. The keys you need:
+The i3 config comes from home-manager, with **Win** as the modifier
+(`Mod`). The keys you need:
 
 | Key               | Action                                    |
 |-------------------|-------------------------------------------|
@@ -80,6 +80,16 @@ by side.
 To set a wallpaper, run `nitrogen` (`Mod+d`, then type it), add a folder
 of images and pick one with **Zoomed Fill**. It comes back on each login
 and redraws when the VM window is resized.
+
+polybar shows the workspaces, the window title, CPU, memory, disk, IP and
+the clock. Its colors are Gruvbox; change any of them in the VM's
+`configuration.nix`:
+
+```nix
+nix-vm.polybar.colors.accent = "#83a598";
+```
+
+The others are `bg`, `surface`, `fg`, `muted` and `dim`.
 
 ## 4. 🔁 Day to day
 
