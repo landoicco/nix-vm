@@ -1,5 +1,5 @@
 # Shared by every VM, whatever the profile or desktop.
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -46,6 +46,25 @@
   # Features add their user settings under home-manager.users.licaza
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+
+  # Documents, Downloads and the rest; no desktop creates them on NixOS
+  home-manager.users.licaza.xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+  };
+
+  # Color emoji instead of Symbola's monochrome ones
+  fonts.packages = [ pkgs.noto-fonts-color-emoji ];
+  fonts.fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
+
+  # Same cursor on every desktop
+  home-manager.users.licaza.home.pointerCursor = {
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+    x11.enable = true;
+    gtk.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 
