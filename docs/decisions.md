@@ -33,7 +33,8 @@
 
 ## 🧰 Tools
 
-- 🏠 home-manager as a NixOS module, only for zsh and git.
+- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders and the cursor.
+- 📧 The git identity is set system-wide (`/etc/gitconfig`), so `sudo git` commits in `/etc/nixos` carry it too.
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.
 - 🧩 VS Code is installed only; extensions and settings are unmanaged.

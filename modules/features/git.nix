@@ -1,20 +1,14 @@
 # git with the user's public identity.
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, ... }:
 
 {
   options.nix-vm.git.enable = lib.mkEnableOption "git";
 
   config = lib.mkIf config.nix-vm.git.enable {
-    environment.systemPackages = [ pkgs.git ];
-
-    home-manager.users.licaza.programs.git = {
+    # System-wide, so root's commits in /etc/nixos carry it too
+    programs.git = {
       enable = true;
-      settings.user = {
+      config.user = {
         name = "Lando Icaza";
         email = "landoicco@gmail.com";
       };
