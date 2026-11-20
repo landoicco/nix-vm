@@ -27,6 +27,8 @@
       enable = true;
       config = {
         modifier = "Mod4";
+        # Bindings are sorted, so Mod+0 would make i3 start on workspace 10
+        defaultWorkspace = "workspace number 1";
         bars = [ ];
         # Also after Mod+Shift+r, so the bar comes back with i3
         startup = [
