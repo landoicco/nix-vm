@@ -127,8 +127,18 @@ sudo nixos-rebuild switch
 sudo git -C /etc/nixos commit -am "Update nix-vm"
 ```
 
-To follow another branch, edit `inputs.nix-vm.url` in `/etc/nixos/flake.nix`
-and run the same commands.
+To follow another branch, set `inputs.nix-vm.url` in `/etc/nixos/flake.nix`
+and run the same commands:
+
+```nix
+inputs.nix-vm.url = "github:landoicco/nix-vm?ref=<branch>";
+```
+
+Once it is merged, go back to `github:landoicco/nix-vm`. The VM only sees
+commits already pushed to GitHub.
+
+On i3, log out and back in (`Mod+Shift+e`) after a rebuild that changes the
+i3 or polybar config.
 
 ### 💡 Tips
 
