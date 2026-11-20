@@ -145,7 +145,7 @@ i3 or polybar config.
 
 ### 💡 Tips
 
-- ❄️ `nd`: open a project's `nix develop` with zsh; a snowflake badge shows in the prompt.
+- 🧊 `nd`: open a project's `nix develop` with zsh; an ice cube shows in the prompt.
 - 🔎 Type the start of a command and press ↑/↓ to cycle through matching history.
 - ✍️ Edit Doom in `~/.config/doom`; run `doom sync` after changing `init.el`
   or `packages.el`.
