@@ -1,5 +1,5 @@
 # Shared by every VM, whatever the profile or desktop.
-{ ... }:
+{ lib, pkgs, ... }:
 
 {
   imports = [
@@ -16,7 +16,8 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.configurationLimit = 5;
 
-  networking.hostName = "nix-vm";
+  # Each VM's flake sets its own
+  networking.hostName = lib.mkDefault "nix-vm";
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/Mexico_City";
@@ -45,6 +46,25 @@
   # Features add their user settings under home-manager.users.licaza
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+
+  # Documents, Downloads and the rest; no desktop creates them on NixOS
+  home-manager.users.licaza.xdg.userDirs = {
+    enable = true;
+    createDirectories = true;
+  };
+
+  # Color emoji; any monochrome emoji font (e.g. Symbola) would win in Alacritty
+  fonts.packages = [ pkgs.noto-fonts-color-emoji ];
+  fonts.fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
+
+  # Same cursor on every desktop
+  home-manager.users.licaza.home.pointerCursor = {
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+    x11.enable = true;
+    gtk.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
 

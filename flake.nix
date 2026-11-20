@@ -26,6 +26,7 @@
         "xfce"
         "kde"
         "gnome"
+        "i3"
       ];
     in
     {

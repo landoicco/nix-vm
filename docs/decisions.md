@@ -8,7 +8,8 @@
 - ✍️ A VM's own changes go in its `configuration.nix`; the repo is never edited from a VM.
 - 🧩 One file per feature in `modules/features`, holding both its NixOS and home-manager parts, toggled by `nix-vm.<feature>.enable`.
 - 🎛️ Profiles turn features on with `mkDefault`, so a VM can turn any off; for now there is one, `development`.
-- 🖥️ One module per desktop: `xfce`, `kde`, `gnome`.
+- 🖥️ One module per desktop: `xfce`, `kde`, `gnome`, `i3`.
+- 🪟 i3 is the light desktop: X11 runs well in VirtualBox, while Wayland compositors like Hyprland need real 3D acceleration. It uses its default config, dmenu, Alacritty and nitrogen for the wallpaper; i3 itself splits the screen, so no tmux.
 - 🪶 No flake-parts: a plain flake is enough for one system and a few outputs.
 
 ## 📌 Reproducibility
@@ -26,13 +27,14 @@
 
 - 🧊 VMs are disposable: nothing machine-specific lives in this repo.
 - 🥾 BIOS only: GPT with a BIOS boot partition for GRUB, root and 4 GiB swap on `/dev/sda`.
-- 🪪 Fixed hostname `nix-vm` and user `licaza`.
+- 🪪 install.sh asks for the hostname (`nix-vm` by default) and writes it to the VM's `flake.nix`, which names its configuration after it; the user is always `licaza`.
 - 🛡️ VMs are isolated from the host: no shared clipboard, drag and drop or folders.
 - 📦 Guest Additions are on, since `nixos-generate-config` enables them on VirtualBox.
 
 ## 🧰 Tools
 
-- 🏠 home-manager as a NixOS module, only for zsh and git.
+- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders and the cursor.
+- 📧 The git identity is set system-wide (`/etc/gitconfig`), so `sudo git` commits in `/etc/nixos` carry it too.
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.
 - 🧩 VS Code is installed only; extensions and settings are unmanaged.

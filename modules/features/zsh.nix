@@ -46,6 +46,8 @@
         ''
           source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
           [[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
+          # U+2744 alone renders as text; use an emoji-presentation glyph instead
+          typeset -g POWERLEVEL9K_NIX_SHELL_VISUAL_IDENTIFIER_EXPANSION='🧊'
         ''
       ];
     };

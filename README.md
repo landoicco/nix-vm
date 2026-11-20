@@ -4,7 +4,7 @@ NixOS development environment bootstrap for disposable VMs.
 
 ## 📦 What you get
 
-- 🖥️ Desktop of choice: XFCE, KDE or GNOME
+- 🖥️ Desktop of choice: XFCE, KDE, GNOME or i3
 - 🐚 zsh + Powerlevel10k, with history substring search
 - ✍️ Doom Emacs and VS Code
 - 🐳 Docker, git and Brave
@@ -19,7 +19,7 @@ Boot the NixOS minimal ISO in a new VirtualBox VM, then:
 
 ```bash
 curl -LO https://raw.githubusercontent.com/landoicco/nix-vm/main/install.sh
-sudo bash install.sh kde   # or xfce, gnome
+sudo bash install.sh   # asks for the desktop and hostname
 ```
 
 ## 🗂️ Layout
@@ -28,7 +28,7 @@ sudo bash install.sh kde   # or xfce, gnome
 modules/core.nix       # shared by every VM
 modules/disk.nix       # disk layout (disko)
 modules/features/      # one tool per file, with an enable option
-modules/desktops/      # xfce, kde, gnome
+modules/desktops/      # xfce, kde, gnome, i3
 profiles/              # which features a VM gets
 template/              # each VM's /etc/nixos
 config/                # Doom and p10k configs, copied at install
