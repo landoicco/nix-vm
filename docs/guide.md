@@ -81,6 +81,9 @@ To set a wallpaper, run `nitrogen` (`Mod+d`, then type it), add a folder
 of images and pick one with **Zoomed Fill**. It comes back on each login
 and redraws when the VM window is resized.
 
+To browse files, run `pcmanfm` the same way. Without a trash, deleting
+removes files for good.
+
 polybar shows the workspaces, the window title, CPU, memory, disk, IP and
 the clock. Its colors are Gruvbox; change any of them in the VM's
 `configuration.nix`:

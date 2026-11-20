@@ -1,5 +1,5 @@
 # i3 with home-manager's default keys on Win, dmenu (Mod+d), Alacritty (Mod+Enter)
-# and polybar instead of i3bar. nitrogen sets the wallpaper.
+# and polybar instead of i3bar. nitrogen sets the wallpaper; PCManFM browses files.
 { pkgs, ... }:
 
 {
@@ -18,6 +18,7 @@
   environment.systemPackages = [
     pkgs.alacritty
     pkgs.nitrogen
+    pkgs.pcmanfm
   ];
   # i3-sensible-terminal would pick xterm first
   environment.sessionVariables.TERMINAL = "alacritty";
