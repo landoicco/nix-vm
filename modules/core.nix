@@ -53,7 +53,7 @@
     createDirectories = true;
   };
 
-  # Color emoji instead of Symbola's monochrome ones
+  # Color emoji; any monochrome emoji font (e.g. Symbola) would win in Alacritty
   fonts.packages = [ pkgs.noto-fonts-color-emoji ];
   fonts.fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
 

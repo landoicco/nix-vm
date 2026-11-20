@@ -23,11 +23,8 @@
       shellcheck
     ];
 
-    # Icons for the modeline and file tree; Symbola as the fallback font
-    fonts.packages = [
-      pkgs.nerd-fonts.symbols-only
-      pkgs.symbola
-    ];
+    # Icons for the modeline and file tree
+    fonts.packages = [ pkgs.nerd-fonts.symbols-only ];
 
     # The `doom` command
     environment.sessionVariables.PATH = [ "$HOME/.config/emacs/bin" ];
