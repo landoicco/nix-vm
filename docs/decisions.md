@@ -23,6 +23,7 @@
 - 💽 disko partitions the disk from `modules/disk.nix`.
 - 📅 `stateVersion` lives in each VM's `configuration.nix`: set at install, never changed.
 - 🏷️ Track stable (`nixos-26.05`, `release-26.05`); on each NixOS release, bump both and the template's `stateVersion`.
+- 🤖 The one exception: Claude Code and Cursor come from a `nixpkgs-unstable` input, through an overlay, to stay close to their fast upstream releases. Still pinned in `flake.lock`; nixpkgs turns off their self-updaters. Not the official installers, which update outside the lock.
 
 ## 🖥️ VMs
 
@@ -39,6 +40,8 @@
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.
 - 🧩 VS Code is installed only; extensions and settings are unmanaged.
+- 🤖 Claude Code is opt-in (`nix-vm.claudeCode.enable`, commented out in the template), not in the profile. Its `CLAUDE.md` and `settings.json` are copied to `~/.claude` on the first rebuild that finds them missing, so Claude and the user can edit them; credentials, memory and plugins stay out of the repo, and each VM logs in once.
+- 🖱️ Cursor is opt-in the same way (`nix-vm.cursor.enable`); like VS Code, its settings and extensions are unmanaged.
 - 🧹 Weekly Nix GC (older than 7 days), store optimisation and Docker auto-prune, unused images included (`--all`).
 
 ## 🔐 Privacy

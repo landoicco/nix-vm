@@ -4,7 +4,9 @@
 {
   imports = [
     ./disk.nix
+    ./features/claude-code.nix
     ./features/cli.nix
+    ./features/cursor.nix
     ./features/docker.nix
     ./features/emacs.nix
     ./features/git.nix

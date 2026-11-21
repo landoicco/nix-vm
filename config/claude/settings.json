@@ -1,0 +1,35 @@
+{
+  "model": "opus",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "high"
+    }
+  },
+  "theme": "dark",
+  "permissions": {
+    "allow": [
+      "Bash(git status*)",
+      "Bash(git log*)",
+      "Bash(git diff*)",
+      "Bash(git show*)"
+    ],
+    "ask": [
+      "Bash(git *)",
+      "Bash(terraform fmt*)",
+      "Bash(terraform validate*)",
+      "Bash(terraform init*)",
+      "Bash(terraform test*)"
+    ],
+    "deny": [
+      "Bash(git push*)",
+      "Bash(gh *)",
+      "Bash(aws *)",
+      "Bash(cdk *)",
+      "Bash(terraform plan*)",
+      "Bash(terraform apply*)",
+      "Bash(terraform destroy*)",
+      "Bash(terraform import*)",
+      "Bash(terraform state*)"
+    ]
+  }
+}

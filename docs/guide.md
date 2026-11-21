@@ -20,20 +20,8 @@ less install.sh         # read it first: it erases /dev/sda
 sudo bash install.sh    # or skip the desktop menu: sudo bash install.sh kde
 ```
 
-The script:
-
-1. Checks BIOS boot and that `/dev/sda` is not in use.
-2. Asks for the desktop (xfce, kde, gnome or i3) and the hostname
-   (`nix-vm` by default).
-3. Asks you to type `YES` before erasing `/dev/sda`.
-4. Creates this VM's flake from the template, with its desktop, hostname
-   and hardware config, and commits it to a local git repo.
-5. Partitions the disk with disko: GRUB boot, root and 4 GiB of swap.
-6. Installs NixOS from that flake, which ends up in `/etc/nixos`.
-7. Clones Doom Emacs to `~/.config/emacs` and copies the Doom and p10k
-   configs to `~/.config/doom` and `~/.p10k.zsh`.
-8. Asks for your user password (root has none; use `sudo`).
-
+It asks for the desktop and hostname, asks you to type `YES` before erasing
+`/dev/sda`, installs, and asks for your password (root has none; use `sudo`).
 Then power off, remove the ISO from the VM and boot it.
 
 ### 🧪 Testing a branch
@@ -46,8 +34,8 @@ curl -LO https://raw.githubusercontent.com/landoicco/nix-vm/<branch>/install.sh
 sudo NIX_VM_REPO='github:landoicco/nix-vm?ref=<branch>' bash install.sh
 ```
 
-The VM's flake keeps following that branch. Once it is merged, point it
-back to `main` (see "Follow the repo" below).
+`<branch>` can also be a tag, e.g. `v1.1.0`. The VM's flake keeps following
+it; see "Follow the repo" below to point it back to `main`.
 
 ## 3. 👋 First login
 
@@ -74,25 +62,12 @@ The i3 config comes from home-manager, with **Win** as the modifier
 | `Mod+f`           | Fullscreen on and off                     |
 | `Mod+Shift+e`     | Log out                                   |
 
-New windows share the screen: three terminals on one workspace show side
-by side.
-
-To set a wallpaper, run `nitrogen` (`Mod+d`, then type it), add a folder
-of images and pick one with **Zoomed Fill**. It comes back on each login
-and redraws when the VM window is resized.
-
-To browse files, run `pcmanfm` the same way. Without a trash, deleting
-removes files for good.
-
-polybar shows the workspaces, the window title, CPU, memory, disk, IP and
-the clock. Its colors are Gruvbox; change any of them in the VM's
-`configuration.nix`:
-
-```nix
-nix-vm.polybar.colors.accent = "#83a598";
-```
-
-The others are `bg`, `surface`, `fg`, `muted` and `dim`.
+- 🖼️ Wallpaper: run `nitrogen` (`Mod+d`), add a folder and pick an image with
+  **Zoomed Fill**; it stays across logins.
+- 📁 Files: `pcmanfm`. There is no trash: deleting is for good.
+- 🎨 polybar colors are Gruvbox; change any of `bg`, `surface`, `fg`,
+  `muted`, `dim` or `accent` in `configuration.nix`, e.g.
+  `nix-vm.polybar.colors.accent = "#83a598";`.
 
 ## 4. 🔁 Day to day
 
@@ -117,6 +92,8 @@ sudo git -C /etc/nixos commit -am "Add btop"
 - A new file in `/etc/nixos` needs `sudo git -C /etc/nixos add <file>`;
   Nix ignores untracked files.
 - Turn off a feature of the profile with, e.g., `nix-vm.docker.enable = false;`.
+- 🤖 AI tools are off by default: uncomment their line and rebuild. For
+  Claude Code, run `claude` and log in; its config is copied to `~/.claude` once.
 - Something broke? Pick an older generation in GRUB, or run
   `sudo nixos-rebuild switch --rollback`.
 
@@ -137,8 +114,9 @@ and run the same commands:
 inputs.nix-vm.url = "github:landoicco/nix-vm?ref=<branch>";
 ```
 
-Once it is merged, go back to `github:landoicco/nix-vm`. The VM only sees
-commits already pushed to GitHub.
+Once it is merged, go back to `github:landoicco/nix-vm`. With a tag
+(`?ref=v1.1.0`), updates stay on that release until you change it. The VM
+only sees commits already pushed to GitHub.
 
 On i3, log out and back in (`Mod+Shift+e`) after a rebuild that changes the
 i3 or polybar config.
@@ -156,8 +134,10 @@ Work in your own clone, never from a VM:
 
 - 🧩 New tool for every VM: a module in `modules/features` with its
   `nix-vm.<name>.enable` option, turned on in `profiles/development.nix`.
-- 📝 Doom or p10k changes worth keeping: copy them from a VM to `config/` by hand.
-- 🔄 Update pinned packages: `nix flake update`.
+- 📝 Doom, p10k or Claude Code changes worth keeping: copy them from a VM to
+  `config/` by hand.
+- 🔄 Update pinned packages: `nix flake update`; only Claude Code and Cursor:
+  `nix flake update nixpkgs-unstable`.
 - ✅ Before committing: `nix flake check --no-build "path:$PWD"`. CI runs
   the same check on every pull request and push to `main`.
 
