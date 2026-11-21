@@ -35,7 +35,8 @@
 
 ## 🧰 Tools
 
-- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders, the cursor, and i3 and polybar.
+- 🏠 home-manager as a NixOS module, only for per-user settings: zsh, user folders, and i3 and polybar.
+- 🖱️ Each desktop keeps its own mouse cursor (Breeze on KDE, Adwaita on GNOME). Only i3, which has none, gets Adwaita, set on its root window with `xsetroot` at startup, since `none+i3` never runs `~/.xsession`.
 - 📧 The git identity is set system-wide (`/etc/gitconfig`), so `sudo git` commits in `/etc/nixos` carry it too.
 - 📁 Doom and p10k configs are plain files copied once to `~/.config/doom` and `~/.p10k.zsh`.
 - 🧠 Doom uses tree-sitter but no LSP; language tooling comes from each project's flake.

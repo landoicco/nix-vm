@@ -33,6 +33,11 @@
         bars = [ ];
         # Also after Mod+Shift+r, so the bar comes back with i3
         startup = [
+          # The root window keeps X's default cursor otherwise
+          {
+            command = "${pkgs.xsetroot}/bin/xsetroot -cursor_name left_ptr";
+            notification = false;
+          }
           {
             command = "systemctl --user restart polybar";
             always = true;
@@ -40,6 +45,13 @@
           }
         ];
       };
+    };
+    # i3 has no cursor theme of its own; the other desktops keep theirs
+    home.pointerCursor = {
+      package = pkgs.adwaita-icon-theme;
+      name = "Adwaita";
+      size = 24;
+      x11.enable = true;
     };
     # Replaces the config from i3's first-login wizard on existing VMs
     xdg.configFile."i3/config".force = true;

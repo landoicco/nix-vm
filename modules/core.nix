@@ -59,15 +59,6 @@
   fonts.packages = [ pkgs.noto-fonts-color-emoji ];
   fonts.fontconfig.defaultFonts.emoji = [ "Noto Color Emoji" ];
 
-  # Same cursor on every desktop
-  home-manager.users.licaza.home.pointerCursor = {
-    package = pkgs.adwaita-icon-theme;
-    name = "Adwaita";
-    size = 24;
-    x11.enable = true;
-    gtk.enable = true;
-  };
-
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.experimental-features = [
