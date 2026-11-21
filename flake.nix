@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-    # Only for Claude Code, which stable lags far behind on
+    # Only for fast-moving tools stable lags far behind on: Claude Code, Cursor
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -41,7 +41,7 @@
             disko.nixosModules.disko
             ./modules/core.nix
           ];
-          # pkgs.claude-code from unstable; the rest of pkgs stays on stable.
+          # These tools from unstable; the rest of pkgs stays on stable.
           # Its own nixpkgs instance, which doesn't inherit allowUnfree.
           nixpkgs.overlays = [
             (final: prev: {
@@ -51,6 +51,7 @@
                   config.allowUnfree = true;
                 })
                 claude-code
+                code-cursor
                 ;
             })
           ];

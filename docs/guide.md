@@ -120,6 +120,8 @@ sudo git -C /etc/nixos commit -am "Add btop"
 - 🤖 Claude Code is off by default: uncomment `nix-vm.claudeCode.enable = true;`,
   rebuild, run `claude` and log in. The first rebuild copies `CLAUDE.md` and
   `settings.json` to `~/.claude`; later edits stay in this VM.
+- 🖱️ Cursor is off by default too: uncomment `nix-vm.cursor.enable = true;`
+  and rebuild.
 - Something broke? Pick an older generation in GRUB, or run
   `sudo nixos-rebuild switch --rollback`.
 
@@ -161,7 +163,7 @@ Work in your own clone, never from a VM:
   `nix-vm.<name>.enable` option, turned on in `profiles/development.nix`.
 - 📝 Doom, p10k or Claude Code changes worth keeping: copy them from a VM to
   `config/` by hand.
-- 🔄 Update pinned packages: `nix flake update`; only Claude Code:
+- 🔄 Update pinned packages: `nix flake update`; only Claude Code and Cursor:
   `nix flake update nixpkgs-unstable`.
 - ✅ Before committing: `nix flake check --no-build "path:$PWD"`. CI runs
   the same check on every pull request and push to `main`.
