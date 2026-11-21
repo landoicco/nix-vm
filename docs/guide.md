@@ -117,6 +117,9 @@ sudo git -C /etc/nixos commit -am "Add btop"
 - A new file in `/etc/nixos` needs `sudo git -C /etc/nixos add <file>`;
   Nix ignores untracked files.
 - Turn off a feature of the profile with, e.g., `nix-vm.docker.enable = false;`.
+- 🤖 Claude Code is off by default: uncomment `nix-vm.claudeCode.enable = true;`,
+  rebuild, run `claude` and log in. The first rebuild copies `CLAUDE.md` and
+  `settings.json` to `~/.claude`; later edits stay in this VM.
 - Something broke? Pick an older generation in GRUB, or run
   `sudo nixos-rebuild switch --rollback`.
 
@@ -156,8 +159,10 @@ Work in your own clone, never from a VM:
 
 - 🧩 New tool for every VM: a module in `modules/features` with its
   `nix-vm.<name>.enable` option, turned on in `profiles/development.nix`.
-- 📝 Doom or p10k changes worth keeping: copy them from a VM to `config/` by hand.
-- 🔄 Update pinned packages: `nix flake update`.
+- 📝 Doom, p10k or Claude Code changes worth keeping: copy them from a VM to
+  `config/` by hand.
+- 🔄 Update pinned packages: `nix flake update`; only Claude Code:
+  `nix flake update nixpkgs-unstable`.
 - ✅ Before committing: `nix flake check --no-build "path:$PWD"`. CI runs
   the same check on every pull request and push to `main`.
 

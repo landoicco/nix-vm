@@ -9,6 +9,7 @@ NixOS development environment bootstrap for disposable VMs.
 - ✍️ Doom Emacs and VS Code
 - 🐳 Docker, git and Brave
 - 🧰 CLI basics: zip, unzip, htop, tree, jq, file
+- 🤖 Optional Claude Code, with its config ready
 - 🧹 Self-cleaning: weekly Nix GC and Docker prune
 - 📌 Pinned versions: every VM starts from the same `flake.lock`
 - ✍️ Its own flake in `/etc/nixos`, ready for per-VM changes
@@ -31,7 +32,7 @@ modules/features/      # one tool per file, with an enable option
 modules/desktops/      # xfce, kde, gnome, i3
 profiles/              # which features a VM gets
 template/              # each VM's /etc/nixos
-config/                # Doom and p10k configs, copied at install
+config/                # Doom, p10k and Claude Code configs, copied once
 ```
 
 ## 📚 Docs

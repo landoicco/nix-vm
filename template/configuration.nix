@@ -6,6 +6,7 @@
   # Examples:
   # environment.systemPackages = [ pkgs.btop ];
   # nix-vm.docker.enable = false;
+  # nix-vm.claudeCode.enable = true;
 
   # The release this VM was installed with; never change it
   system.stateVersion = "26.05";
